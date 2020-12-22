@@ -1,0 +1,3 @@
+#!/bin/bash
+gcloud builds submit --tag gcr.io/bubblenews/bubble-client
+gcloud run deploy bubble-client --image gcr.io/bubblenews/bubble-client --platform managed --region=us-east1 --memory=512Mi
