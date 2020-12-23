@@ -1,0 +1,24 @@
+version: "3.7"
+
+services:
+  bubble-mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=bubble-db
+      - MYSQL_USER=bubble-user
+      - MYSQL_PASSWORD=bubble-password
+    ports:
+      - 3306:3306
+  bubble-api:
+    build: bubble-api/.
+    depends_on: [bubble-mysql]
+    ports:
+      - 8080:8080
+
+  bubble-client:
+    build: bubble-client/.
+    depends_on: [bubble-mysql, bubble-api]
+    ports:
+      - 3000:3000
+
