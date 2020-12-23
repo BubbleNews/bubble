@@ -1,1 +1,11 @@
-.DS_Store
+target/
+.mvn-classpath
+.classpath
+.idea/
+**.DS_Store**
+bubble.iml
+*.pyc
+venv/
+data/*.db
+data/*.sqlite3
+node_modules/
