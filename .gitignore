@@ -9,3 +9,4 @@ venv/
 data/*.db
 data/*.sqlite3
 node_modules/
+application.properties
