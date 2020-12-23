@@ -1,9 +1,9 @@
-package us.bubblenews.bubbleapi.controller;
+package us.bubblenews.bubbleserver.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import us.bubblenews.bubbleapi.model.Article;
-import us.bubblenews.bubbleapi.repository.ArticleRepository;
+import us.bubblenews.bubbleserver.model.Article;
+import us.bubblenews.bubbleserver.repository.ArticleRepository;
 
 @RestController
 @RequestMapping(path="/article")

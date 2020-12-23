@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>us.bubblenews</groupId>
-	<artifactId>bubble-api</artifactId>
-	<version>2.0</version>
-	<name>bubble-api</name>
-	<description>API for Bubble News</description>
+	<artifactId>bubble-server</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>bubble-server</name>
+	<description>Server for Bubble News</description>
 
 	<properties>
 		<java.version>11</java.version>
@@ -29,15 +29,14 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
