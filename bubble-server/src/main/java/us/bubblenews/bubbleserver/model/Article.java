@@ -1,18 +1,33 @@
 package us.bubblenews.bubbleserver.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Fetch;
+
+import javax.persistence.*;
+import java.util.Date;
+import java.util.Map;
 
 @Entity
 public class Article {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String title;
+
+    private String url;
+
+    private Date timePublished;
+
+    @ManyToOne
+    private NewsSource source;
+
+    @JsonIgnore
+    @ElementCollection(fetch = FetchType.LAZY)
+    @MapKeyColumn(name = "word")
+    @Column(name = "count")
+    private Map<String, Integer> wordFrequencyMap;
 
     public Integer getId() {
         return id;
@@ -28,5 +43,37 @@ public class Article {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Date getTimePublished() {
+        return timePublished;
+    }
+
+    public void setTimePublished(Date timePublished) {
+        this.timePublished = timePublished;
+    }
+
+    public NewsSource getSource() {
+        return source;
+    }
+
+    public void setSource(NewsSource source) {
+        this.source = source;
+    }
+
+    public Map<String, Integer> getWordFrequencyMap() {
+        return wordFrequencyMap;
+    }
+
+    public void setWordFrequencyMap(Map<String, Integer> wordCountMap) {
+        this.wordFrequencyMap = wordCountMap;
     }
 }
