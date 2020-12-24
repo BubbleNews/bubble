@@ -6,7 +6,7 @@ import us.bubblenews.bubbleserver.model.Vocab;
 import us.bubblenews.bubbleserver.repository.VocabRepository;
 import us.bubblenews.bubbleserver.service.VocabService;
 
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class VocabServiceImpl extends AbstractModelServiceImpl<Vocab> implements VocabService {
@@ -16,12 +16,20 @@ public class VocabServiceImpl extends AbstractModelServiceImpl<Vocab> implements
 
     // We need to consider concurrency issues
     @Override
-    public Vocab addToVocabCount(String word, Integer count) {
-        Vocab newCount = new Vocab(word, count);
-        Optional<Vocab> existingVocab = repository.findById(word);
-        if (existingVocab.isPresent()) {
-            newCount.setCount(newCount.getCount() + existingVocab.get().getCount());
+    public void addToVocabArticleFrequency(Collection<String> words) {
+        Map<String, Vocab> wordsToVocabs = getWordToVocabMap(words);
+        for (String word : words) {
+            Vocab toSave = wordsToVocabs.getOrDefault(word, new Vocab(word, 0));
+            toSave.setArticleFrequency(toSave.getArticleFrequency() + 1);
+            repository.save(toSave);
         }
-        return repository.save(newCount);
+    }
+
+    private Map<String, Vocab> getWordToVocabMap(Collection<String> words) {
+        Map<String, Vocab> map = new HashMap<>();
+        repository.findAllByWordIn(words)
+                .stream()
+                .forEach(v -> map.put(v.getWord(), v));
+        return map;
     }
 }

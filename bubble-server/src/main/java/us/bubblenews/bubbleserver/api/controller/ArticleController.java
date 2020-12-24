@@ -8,6 +8,7 @@ import us.bubblenews.bubbleserver.model.Article;
 import us.bubblenews.bubbleserver.service.ArticleService;
 import us.bubblenews.bubbleserver.service.NewsSourceService;
 import us.bubblenews.bubbleserver.service.TextProcessingService;
+import us.bubblenews.bubbleserver.service.VocabService;
 
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,9 @@ public class ArticleController {
     private NewsSourceService newsSourceService;
 
     @Autowired
+    private VocabService vocabService;
+
+    @Autowired
     private TextProcessingService textProcessingService;
 
     @PostMapping
@@ -35,6 +39,8 @@ public class ArticleController {
         Map<String, Integer> wordFrequencyMap = textProcessingService
                 .getWordFrequencyMap(scrapedArticle.getRawContent(), " ", false, false);
         article.setWordFrequencyMap(wordFrequencyMap);
+        // increment article frequencies of each word
+        vocabService.addToVocabArticleFrequency(wordFrequencyMap.keySet());
         return articleService.saveArticle(article);
     }
 

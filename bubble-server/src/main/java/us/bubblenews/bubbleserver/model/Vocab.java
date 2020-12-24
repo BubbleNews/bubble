@@ -9,14 +9,13 @@ public class Vocab {
     @Id
     private String word;
 
-    private Integer count;
+    private Integer articleFrequency;
 
     public Vocab() {
     }
-
-    public Vocab(String word, Integer count) {
+    public Vocab(String word, Integer articleFrequency) {
         this.word = word;
-        this.count = count;
+        this.articleFrequency = articleFrequency;
     }
 
     public String getWord() {
@@ -27,11 +26,11 @@ public class Vocab {
         this.word = word;
     }
 
-    public Integer getCount() {
-        return count;
+    public Integer getArticleFrequency() {
+        return articleFrequency;
     }
 
-    public void setCount(Integer count) {
-        this.count = count;
+    public void setArticleFrequency(Integer articleFrequency) {
+        this.articleFrequency = articleFrequency;
     }
 }
