@@ -2,8 +2,8 @@ package us.bubblenews.bubbleserver.service;
 
 import us.bubblenews.bubbleserver.model.Vocab;
 
-import java.util.Collection;
+import java.util.Map;
 
 public interface VocabService {
-    public void addToVocabArticleFrequency(Collection<String> words);
+    public void addToVocabArticleFrequency(Map<String, Integer> wordFrequencies);
 }

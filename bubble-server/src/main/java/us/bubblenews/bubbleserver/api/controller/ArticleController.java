@@ -5,13 +5,14 @@ import org.springframework.web.bind.annotation.*;
 import us.bubblenews.bubbleserver.api.request.Bulk;
 import us.bubblenews.bubbleserver.api.request.ScrapedArticle;
 import us.bubblenews.bubbleserver.model.Article;
+import us.bubblenews.bubbleserver.model.NewsSource;
 import us.bubblenews.bubbleserver.service.ArticleService;
 import us.bubblenews.bubbleserver.service.NewsSourceService;
 import us.bubblenews.bubbleserver.service.TextProcessingService;
 import us.bubblenews.bubbleserver.service.VocabService;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path="/articles")
@@ -31,22 +32,38 @@ public class ArticleController {
 
     @PostMapping
     public Article addArticle(@RequestBody ScrapedArticle scrapedArticle) {
-        Article article = new Article();
-        article.setTitle(scrapedArticle.getTitle());
-        article.setUrl(scrapedArticle.getUrl());
-        article.setTimePublished(scrapedArticle.getTimePublished());
-        article.setSource(newsSourceService.getByNameOrCreate(scrapedArticle.getSourceName()));
-        Map<String, Integer> wordFrequencyMap = textProcessingService
-                .getWordFrequencyMap(scrapedArticle.getRawContent(), " ", false, false);
-        article.setWordFrequencyMap(wordFrequencyMap);
-        // increment article frequencies of each word
-        vocabService.addToVocabArticleFrequency(wordFrequencyMap.keySet());
-        return articleService.saveArticle(article);
+        return addArticles(Arrays.asList(scrapedArticle)).get(0);
+    }
+
+    @PostMapping("/bulk")
+    public List<Article> addArticlesBulk(@RequestBody Bulk<ScrapedArticle> body) {
+        return addArticles(body.getItems());
     }
 
     @GetMapping(path="/all")
-    public Iterable<Article> getAllArticles() {
+    public List<Article> getAllArticles() {
         List<Article> articles = articleService.findAll();
+        return articles;
+    }
+
+    private List<Article> addArticles(List<ScrapedArticle> scrapedArticles) {
+        List<Article> articles = new ArrayList<>();
+        Map<String, Integer> wordToNumberOfArticles = new HashMap<>();
+        for (ScrapedArticle scrapedArticle : scrapedArticles) {
+            Article article = new Article();
+            article.setTitle(scrapedArticle.getTitle());
+            article.setUrl(scrapedArticle.getUrl());
+            article.setTimePublished(scrapedArticle.getTimePublished());
+            article.setSource(newsSourceService.getByNameOrCreate(scrapedArticle.getSourceName()));
+            Map<String, Integer> wordFrequencyInArticle = textProcessingService
+                    .getWordFrequencyMap(scrapedArticle.getRawContent(), " ", false, false);
+            for (String word : wordFrequencyInArticle.keySet()) {
+                wordToNumberOfArticles.put(word, wordToNumberOfArticles.getOrDefault(word, 0) + 1);
+            }
+            article.setWordFrequencyMap(wordFrequencyInArticle);
+            articleService.saveArticle(article);
+        }
+        vocabService.addToVocabArticleFrequency(wordToNumberOfArticles);
         return articles;
     }
 }
