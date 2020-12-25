@@ -16,11 +16,11 @@ public class VocabServiceImpl extends AbstractModelServiceImpl<Vocab> implements
 
     // We need to consider concurrency issues
     @Override
-    public void addToVocabArticleFrequency(Collection<String> words) {
-        Map<String, Vocab> wordsToVocabs = getWordToVocabMap(words);
-        for (String word : words) {
+    public void addToVocabArticleFrequency(Map<String, Integer> wordFrequencies) {
+        Map<String, Vocab> wordsToVocabs = getWordToVocabMap(wordFrequencies.keySet());
+        for (String word : wordFrequencies.keySet()) {
             Vocab toSave = wordsToVocabs.getOrDefault(word, new Vocab(word, 0));
-            toSave.setArticleFrequency(toSave.getArticleFrequency() + 1);
+            toSave.setArticleFrequency(toSave.getArticleFrequency() + wordFrequencies.get(word));
             repository.save(toSave);
         }
     }
