@@ -1,13 +1,203 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+
+.input-group-append {
+  border: white !important;
+  box-shadow: none !important;
+  color: white !important;
+  background-color: white !important;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.sourceDate {
+  background: lightsteelblue;
+  display: inline-block;
+  border-radius: 10px;
+  padding: 0px 10px;
 }
+
+#mainWindow {
+  text-align: center;
+}
+
+.clusterSize {
+  background: lightyellow;
+  display: inline-block;
+  border-radius: 10px;
+  padding: 0px 10px;
+  margin: 10px;
+  border: goldenrod;
+  border-style: solid;
+  color: goldenrod;
+}
+
+.sidePanel {
+  border-radius: 10px;
+  border-style: solid;
+  border-color: white;
+  text-align: center;
+}
+
+h1 {
+  font-family: 'Helvetica', sans-serif;
+  font-size: xxx-large;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0px 0px 8px darkslategray;
+}
+
+h2 {
+  font-family: 'Helvetica', sans-serif;
+  font-size: 1.2em;
+  margin-bottom: 0;
+}
+
+p {
+  font-family: 'Helvetica', sans-serif;
+}
+
+h4 {
+  font-family: 'Helvetica', sans-serif;
+  text-align: center;
+  color: black;
+  font-size: 1.1rem;
+}
+
+#date {
+  margin: auto;
+}
+
+.card {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.btn:hover {
+  text-decoration: none;
+}
+
+.btn {
+  text-decoration: none;
+}
+
+.cluster, h3 {
+  font-family: 'Helvetica', sans-serif;
+  text-decoration: none;
+  font-size: 1em;
+}
+
+.cluster, a {
+  font-family: 'Helvetica', sans-serif;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.clusHead > .btn {
+  display:contents;
+}
+
+#graphWrapper {
+  margin-top: 20px;
+}
+
+#sources {
+  display: flex;
+  flex-direction: column;
+}
+
+.sourceToggle {
+  border-width:0;
+  padding: 10px;
+  margin: 5px;
+  border-radius:5px;
+}
+
+.sourceToggle:focus {
+  outline-width: 0
+}
+
+.slidecontainer {
+  width: 100%; /* Width of the outside container */
+}
+
+.alert {
+  text-align: center;
+}
+
+.sticky-top {
+  top: 5em;
+}
+
+.btn.btn-sm {
+  padding: .5rem 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  .sticky-top {
+    position: static !important;
+  }
+}
+
+.viz {
+  padding-top: 1em;
+}
+
+.container {
+  min-width: 90%;
+}
+
+.modal-footer {
+  justify-content: center;
+}
+
+.tab-pane {
+  background-color: white;
+}
+
+.modal-body > h2 {
+  font-size: larger;
+  font-weight: bold;
+  color: cornflowerblue;
+}
+
+li > h3 {
+  font-weight: bold;
+  color: black;
+}
+
+.modal-title {
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+.article-card {
+  padding-top: 0;
+}
+
+.modal-content {
+  max-width: 1500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.badge-light {
+  font-size: .85em;
+}
+
+.viz-x {
+  top: 10px;
+  right: 10px;
+  position: absolute;
+}
+
+.viz-x:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+a.btn-blue-grey.introjs-button.introjs-disabled {
+  background-color: #f4f4f4 !important;
+  box-shadow: none;
+}
+
+.introjs-tooltip {
+  width: max-content;
+}
+
