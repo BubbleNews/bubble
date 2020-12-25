@@ -1,4 +1,5 @@
-{
+// import IParticlesParams from 'react-particles-js';
+const particleSpecs: any = {
   "particles": {
     "number": {
       "value": 80,
@@ -108,3 +109,5 @@
   },
   "retina_detect": true
 }
+
+export default particleSpecs
