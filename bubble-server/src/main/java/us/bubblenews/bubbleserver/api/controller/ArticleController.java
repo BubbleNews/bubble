@@ -1,18 +1,17 @@
 package us.bubblenews.bubbleserver.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 import us.bubblenews.bubbleserver.api.request.Bulk;
 import us.bubblenews.bubbleserver.api.request.ScrapedArticle;
 import us.bubblenews.bubbleserver.model.Article;
-import us.bubblenews.bubbleserver.model.NewsSource;
 import us.bubblenews.bubbleserver.service.ArticleService;
 import us.bubblenews.bubbleserver.service.NewsSourceService;
 import us.bubblenews.bubbleserver.service.TextProcessingService;
 import us.bubblenews.bubbleserver.service.VocabService;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path="/articles")
@@ -27,6 +26,7 @@ public class ArticleController {
     @Autowired
     private VocabService vocabService;
 
+    @Qualifier("Simple")
     @Autowired
     private TextProcessingService textProcessingService;
 
@@ -56,7 +56,7 @@ public class ArticleController {
             article.setTimePublished(scrapedArticle.getTimePublished());
             article.setSource(newsSourceService.getByNameOrCreate(scrapedArticle.getSourceName()));
             Map<String, Integer> wordFrequencyInArticle = textProcessingService
-                    .getWordFrequencyMap(scrapedArticle.getRawContent(), " ", false, false);
+                    .getTermFrequencyMap(scrapedArticle.getRawContent(), true, false);
             for (String word : wordFrequencyInArticle.keySet()) {
                 wordToNumberOfArticles.put(word, wordToNumberOfArticles.getOrDefault(word, 0) + 1);
             }
