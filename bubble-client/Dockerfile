@@ -4,7 +4,8 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
 COPY . .
+RUN npm install -g serve
 RUN npm install
-RUN npm run build
 EXPOSE 8080
-CMD ["npm", "start", "--port", "8080"]
+RUN npm run build
+CMD ["serve", "-s", "build", "-l", "8080"]
