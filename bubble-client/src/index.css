@@ -97,22 +97,6 @@ h4 {
   margin-top: 20px;
 }
 
-#sources {
-  display: flex;
-  flex-direction: column;
-}
-
-.sourceToggle {
-  border-width:0;
-  padding: 10px;
-  margin: 5px;
-  border-radius:5px;
-}
-
-.sourceToggle:focus {
-  outline-width: 0
-}
-
 .slidecontainer {
   width: 100%; /* Width of the outside container */
 }
