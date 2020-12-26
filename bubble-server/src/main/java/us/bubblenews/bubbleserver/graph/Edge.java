@@ -1,9 +1,9 @@
 package us.bubblenews.bubbleserver.graph;
 
 public interface Edge<T> {
-    public T getSource();
+    public Node<T> getSource();
 
-    public T getDestination();
+    public Node<T> getDestination();
 
     public double getDistance();
 }
