@@ -11,8 +11,8 @@ const SourcesCard: React.FC<SourcesCardProps> = ({sources}) => {
         <MDBCard className="sticky-top sidePanel sourcesWrapper">
             <MDBCardHeader><h4>Toggle Sources</h4></MDBCardHeader>
             <MDBCardBody className="sources">
-                {sources.map((source) =>
-                    <MDBBtn color='success' className="sourceToggle">{source}</MDBBtn>
+                {sources.map((source, index) =>
+                    <MDBBtn color='success' key={index} className="sourceToggle">{source}</MDBBtn>
                 )}
             </MDBCardBody>
         </MDBCard>

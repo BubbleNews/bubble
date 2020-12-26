@@ -18,22 +18,22 @@ const ReclusterCard: React.FC<ReclusterCardProps> = () => {
                     <div className="form-group">
                         <label htmlFor="textWeight">Text Weight</label>
                         <input name="textWeight" id="textWeight" className="custom-range" type="range" min="0" max="1"
-                               value=".5" step="0.01" />
+                               defaultValue=".5" step="0.01" />
                         <label htmlFor="titleWeight">Title Weight</label>
                         <input name="titleWeight" id="titleWeight" className="custom-range" type="range" min="0"
                                max="1"
-                               value=".5" step="0.01" />
+                               defaultValue=".5" step="0.01" />
                         <label htmlFor="entityWeight">Key Word Weight</label>
                         <input name="entityWeight" id="entityWeight" className="custom-range" type="range"
                                min="0"
                                max="1"
-                               value=".5" step="0.01" />
+                               defaultValue=".5" step="0.01" />
 
                         <label htmlFor="numArticles">Maximum Number of Articles</label>
                         <input name="numArticles" type="number" className="form-control" id="numArticles"
                                min="0"
                                max="200"
-                               value="100" style={{ marginBottom: '5px' }} />
+                               defaultValue="100" style={{ marginBottom: '5px' }} />
                         <MDBBtn size='sm' color='primary'
                                 type="submit">
                             Regroup
