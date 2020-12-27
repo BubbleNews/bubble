@@ -21,7 +21,14 @@ function App() {
                 <div className="hidden-lg hidden-md hidden-sm"> </div>
               </MDBCol>
               <MDBCol lg="8" md='6' id="mainWindow">
-                <ClusterList clusters={[]} chartMessage=''/>
+                <ClusterList clusters={[
+                    {
+                        id: '1',
+                        headline: 'Test Cluster!',
+                        size: '5',
+                        articles: []
+                    }
+                ]} chartMessage=''/>
               </MDBCol>
           </MDBRow>
       </MDBContainer>

@@ -1,9 +1,10 @@
 import './ClusterList.css';
 import React from "react";
+import Cluster, {ClusterProps} from "./Cluster";
 
 interface ClusterListProps {
     chartMessage: string,
-    clusters: any[]
+    clusters: ClusterProps[]
 }
 
 const ClusterList: React.FC<ClusterListProps> = ({chartMessage, clusters}) => {
@@ -17,7 +18,10 @@ const ClusterList: React.FC<ClusterListProps> = ({chartMessage, clusters}) => {
                     <span className="sr-only">Loading...</span>
                 </div>
             }
-            <div className="accordion" id="clusters"/>
+            <div className="accordion" id="clusters">
+                {clusters.map((cluster, index) =>
+                <Cluster {...cluster} key={index}/>)}
+            </div>
             <div className="hidden-lg hidden-md hidden-sm"> </div>
         </div>
     );
