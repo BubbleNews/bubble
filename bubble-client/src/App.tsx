@@ -27,6 +27,12 @@ function App() {
                         headline: 'Test Cluster!',
                         size: '5',
                         articles: []
+                    },
+                    {
+                        id: '2',
+                        headline: 'Another News Story!',
+                        size: '4',
+                        articles: []
                     }
                 ]} chartMessage=''/>
               </MDBCol>

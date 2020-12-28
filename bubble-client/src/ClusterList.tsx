@@ -1,6 +1,7 @@
 import './ClusterList.css';
 import React from "react";
 import Cluster, {ClusterProps} from "./Cluster";
+import {Accordion} from "react-bootstrap";
 
 interface ClusterListProps {
     chartMessage: string,
@@ -18,10 +19,10 @@ const ClusterList: React.FC<ClusterListProps> = ({chartMessage, clusters}) => {
                     <span className="sr-only">Loading...</span>
                 </div>
             }
-            <div className="accordion" id="clusters">
+            <Accordion id="clusters">
                 {clusters.map((cluster, index) =>
                 <Cluster {...cluster} key={index}/>)}
-            </div>
+            </Accordion>
             <div className="hidden-lg hidden-md hidden-sm"> </div>
         </div>
     );
