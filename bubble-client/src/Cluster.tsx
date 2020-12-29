@@ -3,12 +3,13 @@ import React, {useState} from "react";
 import {MDBBtn, MDBCard, MDBCardHeader, MDBCol, MDBModal, MDBModalBody,
     MDBModalFooter, MDBRow } from "mdbreact";
 import {Accordion, Button} from "react-bootstrap";
+import Article, {ArticleProps} from "./Article";
 
 export interface ClusterProps {
     id: string,
     headline: string,
     size: string,
-    articles: any[]
+    articles: ArticleProps[]
 }
 
 const Cluster: React.FC<ClusterProps> = ({id, headline, size, articles}) => {
@@ -37,7 +38,9 @@ const Cluster: React.FC<ClusterProps> = ({id, headline, size, articles}) => {
                         </button>
                         <div id={'articlesList' + divId} className="articlesWrapper" role="tabpanel">
                             <ul className="list-group list-group-flush" id="' + divId + '">
-                                {/*Add Articles*/}
+                                {articles.map(
+                                    (article, index) =>
+                                        <Article {...article} key={index} />)}
                             </ul>
                         </div>
                         <div id={'visualization' + divId}>
