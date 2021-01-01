@@ -2,6 +2,7 @@ package us.bubblenews.bubbleserver.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class NewsCluster {
@@ -11,9 +12,12 @@ public class NewsCluster {
     private Integer id;
 
     @OneToMany
-    private List<Article> articles;
+    private Set<Article> articles;
 
-    private double averageConnections;
+    public NewsCluster() {
+    }
 
-    private double averageRadius;
+    public NewsCluster(Set<Article> articles) {
+        this.articles = articles;
+    }
 }

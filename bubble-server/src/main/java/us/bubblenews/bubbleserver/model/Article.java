@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.Map;
 
 @Entity
-public class Article {
+public class Article implements Identifiable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,6 +29,7 @@ public class Article {
     @Column(name = "count")
     private Map<String, Integer> wordFrequencyMap;
 
+    @Override
     public Integer getId() {
         return id;
     }

@@ -1,16 +1,19 @@
 package us.bubblenews.bubbleserver.service;
 
-import us.bubblenews.bubbleserver.clustering.Clusterer;
-import us.bubblenews.bubbleserver.graph.Cluster;
+import us.bubblenews.bubbleserver.clustering.ClusteringAlgorithm;
+import us.bubblenews.bubbleserver.clustering.EdgeWeightCalculator;
 import us.bubblenews.bubbleserver.model.Article;
 import us.bubblenews.bubbleserver.model.NewsCluster;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 public interface NewsClusterService {
-    public List<NewsCluster> saveClusters(List<Cluster<Article>> clusters);
+    public List<NewsCluster> makeClustersFromArticles(Collection<Article> articles, EdgeWeightCalculator<Article> edgeWeightCalculator,
+                                                      ClusteringAlgorithm algorithm, double edgeWeightThreshold);
 
-    public Set<Cluster<Article>> makeClusters(Collection<Article> articles, Clusterer<Article> clusterer);
+    public List<NewsCluster> saveClusters(Collection<NewsCluster> newsClusters);
+
+    public List<NewsCluster> getClustersForDate(Date date);
 }
