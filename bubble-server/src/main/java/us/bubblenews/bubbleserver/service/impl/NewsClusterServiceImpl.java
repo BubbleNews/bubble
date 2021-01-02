@@ -1,14 +1,11 @@
 package us.bubblenews.bubbleserver.service.impl;
 
-import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import us.bubblenews.bubbleserver.graph.GraphBuilder;
 import us.bubblenews.bubbleserver.graph.clustering.ClusteringAlgorithm;
 import us.bubblenews.bubbleserver.graph.similarity.ArticleSimilarity;
 import us.bubblenews.bubbleserver.graph.similarity.EdgeBuilder;
-import us.bubblenews.bubbleserver.graph.similarity.EdgeWeightCalculator;
 import us.bubblenews.bubbleserver.model.Article;
 import us.bubblenews.bubbleserver.model.NewsCluster;
 import us.bubblenews.bubbleserver.repository.NewsClusterRepository;
@@ -26,11 +23,7 @@ public class NewsClusterServiceImpl extends AbstractModelServiceImpl<NewsCluster
     @Override
     public List<NewsCluster> makeClustersFromArticles(Collection<Article> articles, EdgeBuilder<Article, ArticleSimilarity> edgeBuilder,
                                                       ClusteringAlgorithm<ArticleSimilarity> algorithm, double edgeWeightThreshold) {
-        SimpleWeightedGraph<Integer, ArticleSimilarity> graph = new GraphBuilder<Article, ArticleSimilarity>()
-                .setObjects(articles)
-                .setEdgeBuilder(edgeBuilder)
-                .setEdgeWeightThreshold(edgeWeightThreshold)
-                .build();
+        SimpleWeightedGraph<Integer, ArticleSimilarity> graph = makeGraph(articles, edgeBuilder, edgeWeightThreshold);
 
         Map<Integer, Article> articleMap = new HashMap<>();
         articles.stream().forEach(article -> articleMap.put(article.getId(), article));
@@ -54,5 +47,27 @@ public class NewsClusterServiceImpl extends AbstractModelServiceImpl<NewsCluster
     public List<NewsCluster> getClustersForDate(Date date) {
         // TODO: implement get clusters for date
         return new ArrayList<>();
+    }
+
+    private SimpleWeightedGraph<Integer, ArticleSimilarity> makeGraph(Collection<Article> articles,
+                                                                      EdgeBuilder<Article, ArticleSimilarity> edgeBuilder,
+                                                                      double edgeWeightThreshold) {
+        SimpleWeightedGraph<Integer, ArticleSimilarity> graph = new SimpleWeightedGraph<>(ArticleSimilarity.class);
+        for (Article article1 : articles) {
+            graph.addVertex(article1.getId());
+            for (Article article2 : articles) {
+                if (!graph.containsVertex(article2.getId())) {
+                    graph.addVertex(article2.getId());
+                }
+                if (article1.hashCode() < article2.hashCode()) {
+                    ArticleSimilarity edge = edgeBuilder.build(article1, article2);
+                    if (edge.getWeight() >= edgeWeightThreshold) {
+                        graph.addEdge(article1.getId(), article2.getId(), edge);
+                        graph.setEdgeWeight(edge, edge.getWeight());
+                    }
+                }
+            }
+        }
+        return graph;
     }
 }

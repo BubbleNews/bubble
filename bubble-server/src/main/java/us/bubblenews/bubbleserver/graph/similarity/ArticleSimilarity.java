@@ -2,7 +2,7 @@ package us.bubblenews.bubbleserver.graph.similarity;
 
 import org.jgrapht.graph.DefaultWeightedEdge;
 
-public class ArticleSimilarity implements SimpleWeighted {
+public class ArticleSimilarity extends DefaultWeightedEdge {
     private double weightedTextSimilarity;
 
     private double weightedEntitySimilarity;
@@ -10,7 +10,7 @@ public class ArticleSimilarity implements SimpleWeighted {
     private double weightedTitleSimilarity;
 
     @Override
-    public double getSimpleWeight() {
+    public double getWeight() {
         return weightedTextSimilarity + weightedEntitySimilarity + weightedTitleSimilarity;
     }
 
