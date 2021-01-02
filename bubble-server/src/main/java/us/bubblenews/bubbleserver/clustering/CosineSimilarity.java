@@ -1,13 +1,11 @@
 package us.bubblenews.bubbleserver.clustering;
 
-import us.bubblenews.bubbleserver.model.Article;
+import java.util.Map;
 
-public class CosineSimilarity implements EdgeWeightCalculator<Article> {
-    public CosineSimilarity() {
-    }
+public class CosineSimilarity<K> extends SimilarityMeasure<K> {
 
     @Override
-    public double calculateEdgeWeight(Article article1, Article article2) {
-        return 0;
+    public double calculate(Map<K, Double> vector1, Map<K, Double> vector2) {
+        return getDotProductOfVectors(vector1, vector2) / (getMagnitudeOfVector(vector1) * getMagnitudeOfVector(vector2));
     }
 }

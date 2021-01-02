@@ -5,6 +5,7 @@ import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 @Entity
@@ -26,8 +27,24 @@ public class Article implements Identifiable {
     @JsonIgnore
     @ElementCollection(fetch = FetchType.LAZY)
     @MapKeyColumn(name = "word")
-    @Column(name = "count")
     private Map<String, Integer> wordFrequencyMap;
+
+    public Map<String, Double> getNormalizedWordFrequencyVector() {
+        double frequencyOfMostCommonWord = getFrequencyOfMostCommonWord();
+        Map<String, Double> normalizedVector = new HashMap<>();
+        for (Map.Entry<String, Integer> wordEntry : wordFrequencyMap.entrySet()) {
+            normalizedVector.put(wordEntry.getKey(), frequencyOfMostCommonWord * (double) wordEntry.getValue());
+        }
+        return normalizedVector;
+    }
+
+    private int getFrequencyOfMostCommonWord() {
+        int mostCommonFrequency = 0;
+        for (Integer frequency : wordFrequencyMap.values()) {
+            mostCommonFrequency = Math.max(mostCommonFrequency, frequency);
+        }
+        return mostCommonFrequency;
+    }
 
     @Override
     public Integer getId() {

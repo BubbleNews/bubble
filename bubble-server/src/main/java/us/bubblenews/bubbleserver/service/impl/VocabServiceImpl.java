@@ -25,11 +25,26 @@ public class VocabServiceImpl extends AbstractModelServiceImpl<Vocab> implements
         }
     }
 
+    @Override
+    public List<Vocab> findAll() {
+        return iterableToList(repository.findAll());
+    }
+
+    public Map<String, Integer> getWordToArticleFrequencyMap() {
+        Map<String, Integer> wordToArticleFrequencyMap = new HashMap<>();
+        iterableToList(repository.findAll())
+                .stream()
+                .forEach(vocab -> {
+                    wordToArticleFrequencyMap.put(vocab.getWord(), vocab.getArticleFrequency());
+                });
+        return wordToArticleFrequencyMap;
+    }
+
     private Map<String, Vocab> getWordToVocabMap(Collection<String> words) {
         Map<String, Vocab> map = new HashMap<>();
         repository.findAllByWordIn(words)
                 .stream()
-                .forEach(v -> map.put(v.getWord(), v));
+                .forEach(vocab -> map.put(vocab.getWord(), vocab));
         return map;
     }
 }
