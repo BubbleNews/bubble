@@ -1,4 +1,4 @@
-package us.bubblenews.bubbleserver.clustering;
+package us.bubblenews.bubbleserver.graph.similarity;
 
 import java.util.Map;
 

@@ -1,8 +1,9 @@
-package us.bubblenews.bubbleserver.clustering;
+package us.bubblenews.bubbleserver.graph.clustering;
 
 import org.jgrapht.alg.clustering.KSpanningTreeClustering;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
+
 
 import java.util.List;
 import java.util.Set;

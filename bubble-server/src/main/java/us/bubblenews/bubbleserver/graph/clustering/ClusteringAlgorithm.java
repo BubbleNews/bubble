@@ -1,4 +1,4 @@
-package us.bubblenews.bubbleserver.clustering;
+package us.bubblenews.bubbleserver.graph.clustering;
 
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;

@@ -1,4 +1,4 @@
-package us.bubblenews.bubbleserver.clustering;
+package us.bubblenews.bubbleserver.graph.similarity;
 
 import us.bubblenews.bubbleserver.model.Article;
 import us.bubblenews.bubbleserver.model.Vocab;

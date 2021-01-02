@@ -1,7 +1,7 @@
 package us.bubblenews.bubbleserver.service;
 
-import us.bubblenews.bubbleserver.clustering.ClusteringAlgorithm;
-import us.bubblenews.bubbleserver.clustering.EdgeWeightCalculator;
+import us.bubblenews.bubbleserver.graph.clustering.ClusteringAlgorithm;
+import us.bubblenews.bubbleserver.graph.similarity.EdgeWeightCalculator;
 import us.bubblenews.bubbleserver.model.Article;
 import us.bubblenews.bubbleserver.model.NewsCluster;
 

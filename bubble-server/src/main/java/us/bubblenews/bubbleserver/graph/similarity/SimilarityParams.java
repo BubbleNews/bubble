@@ -1,4 +1,4 @@
-package us.bubblenews.bubbleserver.clustering;
+package us.bubblenews.bubbleserver.graph.similarity;
 
 public class SimilarityParams {
     private double textWeight;
