@@ -1,6 +1,6 @@
 import './SourcesCard.css';
 import React from "react";
-import {MDBCard, MDBCardBody, MDBCardHeader} from "mdbreact";
+import {MDBBtn, MDBCard, MDBCardBody, MDBCardHeader} from "mdbreact";
 
 interface SourcesCardProps {
     sources: string[]
@@ -8,12 +8,11 @@ interface SourcesCardProps {
 
 const SourcesCard: React.FC<SourcesCardProps> = ({sources}) => {
     return (
-        <MDBCard id="sourcesWrapper" class="sticky-top sidePanel">
+        <MDBCard className="sticky-top sidePanel sourcesWrapper">
             <MDBCardHeader><h4>Toggle Sources</h4></MDBCardHeader>
-            <MDBCardBody id="sources">
-                {sources.map((source) =>
-                    <button type="button" className="btn btn-success
-                    sourceToggle">{source}</button>
+            <MDBCardBody className="sources">
+                {sources.map((source, index) =>
+                    <MDBBtn color='success' key={index} className="sourceToggle">{source}</MDBBtn>
                 )}
             </MDBCardBody>
         </MDBCard>
