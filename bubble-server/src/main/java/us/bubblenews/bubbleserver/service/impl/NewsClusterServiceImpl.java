@@ -24,11 +24,11 @@ public class NewsClusterServiceImpl extends AbstractModelServiceImpl<NewsCluster
     @Override
     public List<NewsCluster> makeClustersFromArticles(Collection<Article> articles, EdgeWeightCalculator<Article> edgeWeightCalculator,
                                                       ClusteringAlgorithm algorithm, double edgeWeightThreshold) {
-        GraphBuilder<Article> graphBuilder = new GraphBuilder<Article>()
+        SimpleWeightedGraph<Integer, DefaultWeightedEdge> graph = new GraphBuilder<Article>()
                 .setObjects(articles)
                 .setEdgeWeightCalculator(edgeWeightCalculator)
-                .setEdgeWeightThreshold(edgeWeightThreshold);
-        SimpleWeightedGraph<Integer, DefaultWeightedEdge> graph = graphBuilder.build();
+                .setEdgeWeightThreshold(edgeWeightThreshold)
+                .build();
 
         Map<Integer, Article> articleMap = new HashMap<>();
         articles.stream().forEach(article -> articleMap.put(article.getId(), article));
