@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface NewsClusterService {
+
     public List<NewsCluster> makeClustersFromArticles(Collection<Article> articles, EdgeWeightCalculator<Article> edgeWeightCalculator,
                                                       ClusteringAlgorithm algorithm, double edgeWeightThreshold);
 

@@ -3,6 +3,11 @@ package us.bubblenews.bubbleserver.repository;
 import org.springframework.data.repository.CrudRepository;
 import us.bubblenews.bubbleserver.model.Article;
 
+import java.util.Date;
+import java.util.List;
+
 public interface ArticleRepository extends CrudRepository<Article, Integer> {
-    Iterable<Article> findArticlesBySourceId(Integer sourceId);
+    List<Article> findArticlesBySourceId(Integer sourceId);
+
+    List<Article> findArticlesByDate(Date date);
 }

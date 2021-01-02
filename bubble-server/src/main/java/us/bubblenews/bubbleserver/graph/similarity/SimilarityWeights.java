@@ -1,6 +1,6 @@
 package us.bubblenews.bubbleserver.graph.similarity;
 
-public class SimilarityParams {
+public class SimilarityWeights {
     private double textWeight;
 
     private double titleWeight;

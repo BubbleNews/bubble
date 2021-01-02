@@ -7,24 +7,36 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ArticleSimilarityCalculator implements EdgeWeightCalculator<Article> {
+public class ArticleSimilarityBuilder implements EdgeBuilder<Article, ArticleSimilarity> {
     private Map<String, Integer> wordToArticleFrequencyMap;
 
     private int numArticles;
 
     private SimilarityMeasure<String> similarityMeasure;
 
-    public ArticleSimilarityCalculator(Collection<Vocab> vocabulary, int numArticles, SimilarityMeasure<String> similarityMeasure) {
+    private SimilarityWeights weights;
+
+    public ArticleSimilarityBuilder(Collection<Vocab> vocabulary, int numArticles, SimilarityMeasure<String> similarityMeasure,
+                                    SimilarityWeights weights) {
         this.wordToArticleFrequencyMap = makeWordToArticleFrequencyMap(vocabulary);
         this.numArticles = numArticles;
         this.similarityMeasure = similarityMeasure;
+        this.weights = weights;
     }
 
     @Override
-    public double calculateEdgeWeight(Article node1, Article node2) {
-        Map<String, Double> node1WordVector = getNormalizedAndWeightedWordFrequencyVector(node1);
-        Map<String, Double> node2WordVector = getNormalizedAndWeightedWordFrequencyVector(node2);
-        return similarityMeasure.calculate(node1WordVector, node2WordVector);
+    public ArticleSimilarity build(Article v1, Article v2) {
+        Map<String, Double> node1WordVector = getNormalizedAndWeightedWordFrequencyVector(v1);
+        Map<String, Double> node2WordVector = getNormalizedAndWeightedWordFrequencyVector(v2);
+        double textSimilarity = similarityMeasure.calculate(node1WordVector, node2WordVector);
+        // TODO: implement entity and title similarity
+        double entitySimilarity = 0;
+        double titleSimilarity = 0;
+        ArticleSimilarity edge = new ArticleSimilarity();
+        edge.setWeightedTextSimilarity(weights.getTextWeight() * textSimilarity);
+        edge.setWeightedEntitySimilarity(weights.getEntityWeight() * entitySimilarity);
+        edge.setWeightedTitleSimilarity(weights.getTitleWeight() + titleSimilarity);
+        return edge;
     }
 
     private Map<String, Double> getNormalizedAndWeightedWordFrequencyVector(Article article) {

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import us.bubblenews.bubbleserver.graph.GraphBuilder;
 import us.bubblenews.bubbleserver.graph.clustering.ClusteringAlgorithm;
+import us.bubblenews.bubbleserver.graph.similarity.ArticleSimilarity;
+import us.bubblenews.bubbleserver.graph.similarity.EdgeBuilder;
 import us.bubblenews.bubbleserver.graph.similarity.EdgeWeightCalculator;
 import us.bubblenews.bubbleserver.model.Article;
 import us.bubblenews.bubbleserver.model.NewsCluster;
@@ -22,11 +24,11 @@ public class NewsClusterServiceImpl extends AbstractModelServiceImpl<NewsCluster
     private NewsClusterRepository repository;
 
     @Override
-    public List<NewsCluster> makeClustersFromArticles(Collection<Article> articles, EdgeWeightCalculator<Article> edgeWeightCalculator,
-                                                      ClusteringAlgorithm algorithm, double edgeWeightThreshold) {
-        SimpleWeightedGraph<Integer, DefaultWeightedEdge> graph = new GraphBuilder<Article>()
+    public List<NewsCluster> makeClustersFromArticles(Collection<Article> articles, EdgeBuilder<Article, ArticleSimilarity> edgeBuilder,
+                                                      ClusteringAlgorithm<ArticleSimilarity> algorithm, double edgeWeightThreshold) {
+        SimpleWeightedGraph<Integer, ArticleSimilarity> graph = new GraphBuilder<Article, ArticleSimilarity>()
                 .setObjects(articles)
-                .setEdgeWeightCalculator(edgeWeightCalculator)
+                .setEdgeBuilder(edgeBuilder)
                 .setEdgeWeightThreshold(edgeWeightThreshold)
                 .build();
 
