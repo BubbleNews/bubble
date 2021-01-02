@@ -29,15 +29,17 @@ public class Article implements Identifiable {
     @MapKeyColumn(name = "word")
     private Map<String, Integer> wordFrequencyMap;
 
+    @JsonIgnore
     public Map<String, Double> getNormalizedWordFrequencyVector() {
         double frequencyOfMostCommonWord = getFrequencyOfMostCommonWord();
         Map<String, Double> normalizedVector = new HashMap<>();
         for (Map.Entry<String, Integer> wordEntry : wordFrequencyMap.entrySet()) {
-            normalizedVector.put(wordEntry.getKey(), frequencyOfMostCommonWord * (double) wordEntry.getValue());
+            normalizedVector.put(wordEntry.getKey(), (double) wordEntry.getValue() / frequencyOfMostCommonWord);
         }
         return normalizedVector;
     }
 
+    @JsonIgnore
     private int getFrequencyOfMostCommonWord() {
         int mostCommonFrequency = 0;
         for (Integer frequency : wordFrequencyMap.values()) {

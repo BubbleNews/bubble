@@ -1,7 +1,5 @@
 package us.bubblenews.bubbleserver.service.impl;
 
-import org.jgrapht.Graph;
-import org.jgrapht.alg.clustering.KSpanningTreeClustering;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
 import org.springframework.beans.factory.annotation.Autowired;

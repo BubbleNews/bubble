@@ -61,7 +61,7 @@ public class ArticleController {
                 wordToNumberOfArticles.put(word, wordToNumberOfArticles.getOrDefault(word, 0) + 1);
             }
             article.setWordFrequencyMap(wordFrequencyInArticle);
-            articleService.saveArticle(article);
+            articles.add(articleService.saveArticle(article));
         }
         vocabService.addToVocabArticleFrequency(wordToNumberOfArticles);
         return articles;
