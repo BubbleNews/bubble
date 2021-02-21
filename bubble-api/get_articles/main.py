@@ -2,7 +2,9 @@ import numpy as np
 from newspaper import Article
 from newspaper.article import ArticleException
 import json
+import requests
 import re
+import datetime
 from newsapi import NewsApiClient
 # import nltk
 # nltk.download('wordnet')
@@ -32,14 +34,14 @@ def get_articles(request):
         Response object using
         `make_response <http://flask.pocoo.org/docs/1.0/api/#flask.Flask.make_response>`.
     """
-    request_json = request.get_json()
-    arg_dict = {"start": "2020-12-10", "end": "2020-12-31", "num": 5}
+#     request_json = request.get_json()
+    arg_dict = {"start": "2021-02-01", "end": "2021-02-21", "num": 1}
 
-    for k, v in arg_dict.items():
-        if request.args and k in request.args:
-            arg_dict[k] = request.args.get(k)
-        elif request_json and k in request_json:
-            arg_dict[k] = request_json[k]
+#     for k, v in arg_dict.items():
+#         if request.args and k in request.args:
+#             arg_dict[k] = request.args.get(k)
+#         elif request_json and k in request_json:
+#             arg_dict[k] = request_json[k]
 
 
     top_headlines = NEWS_API.get_everything(from_param=arg_dict['start'],
@@ -64,14 +66,25 @@ def get_articles(request):
             # word_list = nltk.word_tokenize(text)
             # word_list = [lemmatizer.lemmatize(w) for w in word_list]
             if len(text) >= MINIMUM_ARTICLE_CHAR_LENGTH:
+                date = datetime.datetime.strptime(a['publishedAt'], "%Y-%m-%dT%H:%M:%SZ")
+                date = date.strftime("%d-%m-%Y %H:%M")
+                print(date)
                 articles_json.append(
                     {
                 'title': article.title,
                 'url': a['url'],
-                'timePublished': a['publishedAt'],
+                'timePublished': date,
                 'sourceName': a['source']['name'],
-                'content': text
+                'rawContent': text
                 })
         except ArticleException:
             pass
-    return json.dumps(articles_json)
+    step2 = {"items": articles_json}
+    final = json.dumps(step2)
+    requests.post("http://localhost:8080/articles/bulk", json = final, headers = {"Content-Type":
+    "application/json"})
+    return final
+
+
+if __name__ == '__main__':
+    get_articles({})
