@@ -22,7 +22,7 @@ public class ArticleServiceImpl extends AbstractModelServiceImpl<Article> implem
 
     @Override
     public List<Article> findArticlesByDate(Date date) {
-        return repository.findArticlesByDate(date);
+        return repository.findArticlesByTimePublished(date);
     }
 
     @Override

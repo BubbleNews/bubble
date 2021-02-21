@@ -9,5 +9,5 @@ import java.util.List;
 public interface ArticleRepository extends CrudRepository<Article, Integer> {
     List<Article> findArticlesBySourceId(Integer sourceId);
 
-    List<Article> findArticlesByDate(Date date);
+    List<Article> findArticlesByTimePublished(Date date);
 }

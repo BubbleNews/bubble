@@ -31,10 +31,9 @@ public class NewsClusterController {
     private VocabService vocabService;
 
     @PostMapping
-    public List<NewsCluster> makeClusters(@RequestParam("date") @DateTimeFormat(pattern = "dd.MM.yyyy") Date date,
-                                          @RequestBody ClusteringParams clusteringParams) {
+    public List<NewsCluster> makeClusters(@RequestBody ClusteringParams clusteringParams) {
         List<Vocab> vocabulary = vocabService.findAll();
-        List<Article> articles = articleService.findArticlesByDate(date);
+        List<Article> articles = articleService.findAll();
         ClusteringAlgorithm<ArticleSimilarity> algorithm = getClusteringAlgorithmFromClusteringParams(clusteringParams);
         SimilarityMeasure<String> similarityMeasure = getGetSimilarityMeasureFromClusteringParams(clusteringParams);
         SimilarityWeights weights = getSimilarityWeightsFromClusteringParams(clusteringParams);
@@ -43,11 +42,6 @@ public class NewsClusterController {
         List<NewsCluster> clusters = newsClusterService.makeClustersFromArticles(articles, edgeBuilder, algorithm,
                 clusteringParams.getEdgeWeightThreshold());
         return clusters;
-    }
-
-    @GetMapping("/all")
-    public List<NewsCluster> getClusters(@RequestParam("date") @DateTimeFormat(pattern = "dd.MM.yyyy") Date date) {
-        return newsClusterService.getClustersForDate(date);
     }
 
     private ClusteringAlgorithm<ArticleSimilarity> getClusteringAlgorithmFromClusteringParams(ClusteringParams params) {

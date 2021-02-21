@@ -56,7 +56,7 @@ public class ArticleController {
             article.setTimePublished(scrapedArticle.getTimePublished());
             article.setSource(newsSourceService.getByNameOrCreate(scrapedArticle.getSourceName()));
             Map<String, Integer> wordFrequencyInArticle = textProcessingService
-                    .getTermFrequencyMap(scrapedArticle.getRawContent(), true, false);
+                    .getTermFrequencyMap(scrapedArticle.getRawContent(), true, true);
             for (String word : wordFrequencyInArticle.keySet()) {
                 wordToNumberOfArticles.put(word, wordToNumberOfArticles.getOrDefault(word, 0) + 1);
             }
