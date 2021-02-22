@@ -1,0 +1,6 @@
+How to deploy:
+
+In the get_articles folder:
+gcloud functions deploy get_articles
+
+gcloud functions call get_articles --data '{"start": "2021-02-01", "end": "2021-02-21", "num": 10}'

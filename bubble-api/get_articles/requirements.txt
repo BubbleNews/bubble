@@ -4,3 +4,5 @@ numpy
 newspaper3k
 newsapi-python
 nltk
+requests
+datetime
