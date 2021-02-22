@@ -38,7 +38,7 @@ public class GravesClustering<E extends DefaultWeightedEdge> implements Clusteri
     private void setThresholds() {
         // TODO: get threshold calculations right
         overallEdgeWeightThreshold = 0.5;
-        clusterEdgeWeightThreshold = 0.1
+        clusterEdgeWeightThreshold = 0.1;
     }
 
     private void trimEdges() {
