@@ -13,9 +13,11 @@ import java.util.List;
 public interface NewsClusterService {
 
     public List<NewsCluster> makeClustersFromArticles(Collection<Article> articles, EdgeBuilder<Article, ArticleSimilarity> edgeBuilder,
-                                                      ClusteringAlgorithm<ArticleSimilarity> algorithm, double edgeWeightThreshold);
+                                                      ClusteringAlgorithm<ArticleSimilarity> algorithm);
 
     public List<NewsCluster> saveClusters(Collection<NewsCluster> newsClusters);
 
     public List<NewsCluster> getClustersForDate(Date date);
+
+    public List<NewsCluster> getAllClusters();
 }

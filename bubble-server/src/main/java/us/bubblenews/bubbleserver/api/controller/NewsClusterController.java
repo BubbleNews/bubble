@@ -39,9 +39,17 @@ public class NewsClusterController {
         SimilarityWeights weights = getSimilarityWeightsFromClusteringParams(clusteringParams);
         ArticleSimilarityBuilder edgeBuilder = new ArticleSimilarityBuilder(vocabulary, articles.size(), similarityMeasure, weights);
 
-        List<NewsCluster> clusters = newsClusterService.makeClustersFromArticles(articles, edgeBuilder, algorithm,
-                clusteringParams.getEdgeWeightThreshold());
+        List<NewsCluster> clusters = newsClusterService.makeClustersFromArticles(articles, edgeBuilder, algorithm);
         return clusters;
+    }
+
+    @GetMapping("/all")
+    public List<NewsCluster> getClusters(@RequestParam Date date) {
+        if (date == null) {
+            return newsClusterService.getAllClusters();
+        } else {
+            return newsClusterService.getClustersForDate(date);
+        }
     }
 
     private ClusteringAlgorithm<ArticleSimilarity> getClusteringAlgorithmFromClusteringParams(ClusteringParams params) {

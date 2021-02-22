@@ -3,6 +3,7 @@ package us.bubblenews.bubbleserver.service.impl;
 import org.jgrapht.graph.SimpleWeightedGraph;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import us.bubblenews.bubbleserver.graph.clustering.Cluster;
 import us.bubblenews.bubbleserver.graph.clustering.ClusteringAlgorithm;
 import us.bubblenews.bubbleserver.graph.similarity.ArticleSimilarity;
 import us.bubblenews.bubbleserver.graph.similarity.EdgeBuilder;
@@ -22,14 +23,14 @@ public class NewsClusterServiceImpl extends AbstractModelServiceImpl<NewsCluster
 
     @Override
     public List<NewsCluster> makeClustersFromArticles(Collection<Article> articles, EdgeBuilder<Article, ArticleSimilarity> edgeBuilder,
-                                                      ClusteringAlgorithm<ArticleSimilarity> algorithm, double edgeWeightThreshold) {
-        SimpleWeightedGraph<Integer, ArticleSimilarity> graph = makeGraph(articles, edgeBuilder, edgeWeightThreshold);
+                                                      ClusteringAlgorithm<ArticleSimilarity> algorithm) {
+        SimpleWeightedGraph<Integer, ArticleSimilarity> graph = makeGraph(articles, edgeBuilder);
 
         Map<Integer, Article> articleMap = new HashMap<>();
         articles.stream().forEach(article -> articleMap.put(article.getId(), article));
         List<NewsCluster> clusters = new ArrayList<>();
-        for (Set<Integer> articleIdsInCluster : algorithm.getClusters(graph)) {
-            Set<Article> articlesInCluster = articleIdsInCluster
+        for (Cluster<ArticleSimilarity> cluster : algorithm.getClusters(graph)) {
+            Set<Article> articlesInCluster = cluster.getVertices()
                     .stream()
                     .map(id -> articleMap.get(id))
                     .collect(Collectors.toSet());
@@ -49,9 +50,13 @@ public class NewsClusterServiceImpl extends AbstractModelServiceImpl<NewsCluster
         return new ArrayList<>();
     }
 
+    @Override
+    public List<NewsCluster> getAllClusters() {
+        return iterableToList(repository.findAll());
+    }
+
     private SimpleWeightedGraph<Integer, ArticleSimilarity> makeGraph(Collection<Article> articles,
-                                                                      EdgeBuilder<Article, ArticleSimilarity> edgeBuilder,
-                                                                      double edgeWeightThreshold) {
+                                                                      EdgeBuilder<Article, ArticleSimilarity> edgeBuilder) {
         SimpleWeightedGraph<Integer, ArticleSimilarity> graph = new SimpleWeightedGraph<>(ArticleSimilarity.class);
         for (Article article1 : articles) {
             graph.addVertex(article1.getId());
@@ -61,10 +66,8 @@ public class NewsClusterServiceImpl extends AbstractModelServiceImpl<NewsCluster
                 }
                 if (article1.hashCode() < article2.hashCode()) {
                     ArticleSimilarity edge = edgeBuilder.build(article1, article2);
-                    if (edge.getWeight() >= edgeWeightThreshold) {
-                        graph.addEdge(article1.getId(), article2.getId(), edge);
-                        graph.setEdgeWeight(edge, edge.getWeight());
-                    }
+                    graph.addEdge(article1.getId(), article2.getId(), edge);
+                    graph.setEdgeWeight(edge, edge.getWeight());
                 }
             }
         }

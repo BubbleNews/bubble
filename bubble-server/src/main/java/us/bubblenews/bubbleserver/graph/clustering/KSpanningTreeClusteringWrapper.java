@@ -7,6 +7,7 @@ import org.jgrapht.graph.SimpleWeightedGraph;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class KSpanningTreeClusteringWrapper<E extends DefaultWeightedEdge> implements ClusteringAlgorithm<E> {
 
@@ -17,8 +18,11 @@ public class KSpanningTreeClusteringWrapper<E extends DefaultWeightedEdge> imple
     }
 
     @Override
-    public List<Set<Integer>> getClusters(SimpleWeightedGraph<Integer, E> graph) {
+    public List<Cluster> getClusters(SimpleWeightedGraph<Integer, E> graph) {
         KSpanningTreeClustering<Integer, E> algo = new KSpanningTreeClustering<>(graph, desiredNumberOfClusters);
-        return algo.getClustering().getClusters();
+        return algo.getClustering().getClusters()
+                .stream()
+                .map(idSet -> new Cluster(graph, idSet))
+                .collect(Collectors.toList());
     }
 }
