@@ -18,11 +18,11 @@ public class KSpanningTreeClusteringWrapper<E extends DefaultWeightedEdge> imple
     }
 
     @Override
-    public List<Cluster> getClusters(SimpleWeightedGraph<Integer, E> graph) {
+    public List<Cluster<E>> getClusters(SimpleWeightedGraph<Integer, E> graph) {
         KSpanningTreeClustering<Integer, E> algo = new KSpanningTreeClustering<>(graph, desiredNumberOfClusters);
         return algo.getClustering().getClusters()
                 .stream()
-                .map(idSet -> new Cluster(graph, idSet))
+                .map(idSet -> new Cluster<E>(graph, idSet))
                 .collect(Collectors.toList());
     }
 }

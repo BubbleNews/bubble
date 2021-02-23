@@ -10,8 +10,8 @@ public class GravesClustering<E extends DefaultWeightedEdge> implements Clusteri
     private SimpleWeightedGraph<Integer, E> graph;
     private EdgeComparator<E> edgeComparator;
     private List<E> edges;
-    private Set<Cluster> clusters;
-    private Map<Integer, Cluster> vertexToCluster;
+    private Set<Cluster<E>> clusters;
+    private Map<Integer, Cluster<E>> vertexToCluster;
     private double overallEdgeWeightThreshold;
     private double clusterEdgeWeightThreshold;
 
@@ -22,7 +22,7 @@ public class GravesClustering<E extends DefaultWeightedEdge> implements Clusteri
 
 
     @Override
-    public List<Cluster> getClusters(SimpleWeightedGraph<Integer, E> graph) {
+    public List<Cluster<E>> getClusters(SimpleWeightedGraph<Integer, E> graph) {
         clusters = new HashSet<>();
         vertexToCluster = new HashMap<>();
         this.graph = graph;

@@ -1,11 +1,14 @@
 package us.bubblenews.bubbleserver.api.controller;
 
+import org.dom4j.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import us.bubblenews.bubbleserver.api.request.ClusteringParams;
 import us.bubblenews.bubbleserver.graph.clustering.ClusteringAlgorithm;
+import us.bubblenews.bubbleserver.graph.clustering.GravesClustering;
 import us.bubblenews.bubbleserver.graph.clustering.KSpanningTreeClusteringWrapper;
+import us.bubblenews.bubbleserver.graph.clustering.RandomClustering;
 import us.bubblenews.bubbleserver.graph.similarity.*;
 import us.bubblenews.bubbleserver.model.Article;
 import us.bubblenews.bubbleserver.model.NewsCluster;
@@ -54,9 +57,13 @@ public class NewsClusterController {
 
     private ClusteringAlgorithm<ArticleSimilarity> getClusteringAlgorithmFromClusteringParams(ClusteringParams params) {
         switch(params.getClusteringAlgorithmName()) {
-            case "KSpanningTree":
-            default:
+            case "kspanningtree":
                 return new KSpanningTreeClusteringWrapper<>(params.getNumberOfClusters());
+            case "graves":
+                return new GravesClustering<>();
+            case "random":
+            default:
+                return new RandomClustering<>(params.getNumberOfClusters());
         }
     }
 

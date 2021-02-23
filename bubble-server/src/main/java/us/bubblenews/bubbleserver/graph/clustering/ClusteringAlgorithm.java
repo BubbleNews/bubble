@@ -6,5 +6,5 @@ import org.jgrapht.graph.SimpleWeightedGraph;
 import java.util.List;
 
 public interface ClusteringAlgorithm<E extends DefaultWeightedEdge> {
-    public List<Cluster> getClusters(SimpleWeightedGraph<Integer, E> graph);
+    public List<Cluster<E>> getClusters(SimpleWeightedGraph<Integer, E> graph);
 }
