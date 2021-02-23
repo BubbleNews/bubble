@@ -35,7 +35,7 @@ def get_articles(request):
         `make_response <http://flask.pocoo.org/docs/1.0/api/#flask.Flask.make_response>`.
     """
 #     request_json = request.get_json()
-    arg_dict = {"start": "2021-02-01", "end": "2021-02-21", "num": 1}
+    arg_dict = {"start": "2021-02-01", "end": "2021-02-21", "num": 10}
 
 #     for k, v in arg_dict.items():
 #         if request.args and k in request.args:
@@ -80,9 +80,8 @@ def get_articles(request):
         except ArticleException:
             pass
     step2 = {"items": articles_json}
-    final = json.dumps(step2)
-    requests.post("http://localhost:8080/articles/bulk", json = final, headers = {"Content-Type":
-    "application/json"})
+    requests.post("http://localhost:8080/articles/bulk", json = step2, headers =
+    {"Content-Type": "application/json"})
     return final
 
 
